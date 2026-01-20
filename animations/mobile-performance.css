@@ -1,0 +1,282 @@
+/* Mobile Performance Optimizations */
+
+/* Reduce animations on low-end devices */
+.low-end-device * {
+    animation-duration: 0.1s !important;
+    transition-duration: 0.1s !important;
+}
+
+/* Mobile device optimizations */
+.mobile-device {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Optimize touch targets for accessibility */
+.mobile-device button,
+.mobile-device .btn,
+.mobile-device .social-link-pro,
+.mobile-device .project-card {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .continuous-spin,
+    .rotate-profile,
+    .float-profile {
+        animation: none;
+    }
+}
+
+/* Mobile-first responsive breakpoints */
+@media (max-width: 320px) {
+    /* Very small screens */
+    .hero-title {
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .profile-image-container {
+        height: 240px;
+    }
+    
+    .btn {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 321px) and (max-width: 480px) {
+    /* Small phones */
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .profile-image-container {
+        height: 280px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    /* Tablets and large phones */
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .profile-image-container {
+        height: 320px;
+    }
+    
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Small tablets and large phones landscape */
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .profile-image {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Orientation-specific styles */
+@media (orientation: portrait) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .profile-image-container {
+        margin-top: var(--spacing-md);
+    }
+}
+
+@media (orientation: landscape) {
+    .hero {
+        min-height: 100vh;
+    }
+    
+    .hero-content {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+    }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .navbar {
+        padding-top: env(safe-area-inset-top);
+    }
+    
+    .hero {
+        padding-top: calc(100px + env(safe-area-inset-top));
+    }
+}
+
+/* Android Chrome specific fixes */
+@supports (font: -apple-system-body) and (not (-webkit-touch-callout: none)) {
+    .navbar {
+        padding-top: var(--spacing-md);
+    }
+}
+
+/* Fast click handling for mobile */
+.mobile-device a,
+.mobile-device button,
+.mobile-device .btn {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+
+/* Prevent elastic scrolling on iOS */
+.mobile-device {
+    position: relative;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+/* Optimize scrolling performance */
+.mobile-device .section {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+}
+
+/* Memory optimization for mobile */
+@media (max-width: 768px) {
+    /* Reduce image quality for better performance */
+    .profile-image {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        will-change: transform;
+    }
+    
+    /* Optimize animations */
+    .project-card,
+    .social-link-pro {
+        will-change: transform;
+    }
+    
+    /* Reduce box-shadow complexity */
+    .project-card:hover,
+    .social-link-pro:hover {
+        will-change: auto;
+    }
+}
+
+/* Battery saving mode detection */
+@media (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce) {
+    body {
+        background-color: #000;
+        color: #fff;
+    }
+    
+    .dark-mode-toggle {
+        background: #444;
+    }
+}
+
+/* Network performance optimizations */
+.link-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* Loading states for slow networks */
+.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #ccc;
+    border-top-color: #333;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Offline support indicator */
+.offline-indicator {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    z-index: 1001;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.offline-indicator.show {
+    opacity: 1;
+}
+
+/* Touch gesture feedback */
+.touch-feedback {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    background: rgba(99, 102, 241, 0.2);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    animation: touchPulse 0.3s ease-out;
+}
+
+@keyframes touchPulse {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}

@@ -1,0 +1,262 @@
+/* Enhanced Mobile Responsiveness for Projects and Social Links */
+
+/* Projects Grid - Enhanced Mobile Optimization */
+.projects-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    padding: 0 var(--spacing-md);
+}
+
+/* Mobile Projects Improvements */
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .project-card {
+        margin: 0 auto;
+        max-width: 90vw;
+    }
+    
+    .project-image {
+        height: 180px;
+    }
+    
+    .project-content {
+        padding: var(--spacing-md);
+    }
+    
+    .project-title {
+        font-size: 1.3rem;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .project-description {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    .project-tech {
+        gap: 0.4rem;
+    }
+    
+    .tech-tag {
+        padding: 0.2rem 0.6rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .projects-grid {
+        gap: var(--spacing-sm);
+        padding: 0 var(--spacing-xs);
+    }
+    
+    .project-card {
+        max-width: 95vw;
+    }
+    
+    .project-image {
+        height: 160px;
+    }
+    
+    .project-content {
+        padding: var(--spacing-sm);
+    }
+    
+    .project-title {
+        font-size: 1.2rem;
+    }
+    
+    .project-description {
+        font-size: 0.9rem;
+    }
+    
+    .tech-tag {
+        padding: 0.15rem 0.5rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Social Links - Enhanced Mobile Optimization */
+.social-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.social-links-professional {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--spacing-md);
+    padding: 0 var(--spacing-md);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.social-link-pro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: var(--transition);
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    min-height: 120px;
+    text-align: center;
+}
+
+.social-link-pro i {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-xs);
+    transition: var(--transition);
+}
+
+.social-link-pro span {
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.social-link-pro:hover {
+    background: var(--gradient-primary);
+    color: white;
+    transform: translateY(-5px) scale(1.02);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-lg);
+}
+
+.social-link-pro:hover i,
+.social-link-pro:hover span {
+    color: white;
+}
+
+/* Mobile Social Links Improvements */
+@media (max-width: 768px) {
+    .social-links-professional {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-sm);
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .social-link-pro {
+        padding: var(--spacing-md);
+        min-height: 100px;
+    }
+    
+    .social-link-pro i {
+        font-size: 1.8rem;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .social-link-pro span {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .social-links-professional {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-xs);
+        padding: 0 var(--spacing-xs);
+    }
+    
+    .social-link-pro {
+        padding: var(--spacing-sm);
+        min-height: 90px;
+    }
+    
+    .social-link-pro i {
+        font-size: 1.6rem;
+    }
+    
+    .social-link-pro span {
+        font-size: 0.8rem;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+    .social-links-professional {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .social-link-pro {
+        min-height: 80px;
+        padding: 10px;
+    }
+    
+    .social-link-pro i {
+        font-size: 1.4rem;
+    }
+    
+    .social-link-pro span {
+        font-size: 0.75rem;
+    }
+}
+
+/* Touch Target Optimization for Mobile */
+@media (max-width: 768px) {
+    .social-link-pro,
+    .project-card {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    .social-link-pro {
+        min-height: 44px; /* Minimum touch target size */
+    }
+    
+    .project-card {
+        min-height: 200px;
+    }
+}
+
+/* Landscape orientation fixes */
+@media (max-width: 768px) and (orientation: landscape) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+    
+    .social-links-professional {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .project-image {
+        height: 150px;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .social-link-pro {
+        border-width: 3px;
+    }
+    
+    .social-link-pro:hover {
+        border-width: 3px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .social-link-pro,
+    .project-card {
+        transition: none;
+    }
+    
+    .social-link-pro:hover {
+        transform: none;
+    }
+}

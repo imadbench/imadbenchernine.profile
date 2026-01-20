@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Professional Portfolio</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="stylesheet" href="styles/dark-mode.css">
+    <link rel="stylesheet" href="animations/mobile-animations.css">
+    <link rel="stylesheet" href="animations/mobile-hint.css">
+    <link rel="stylesheet" href="animations/mobile-performance.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeToggle" class="dark-mode-toggle">
+        <i class="fas fa-moon"></i>
+    </button>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">Portfolio</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">نبذة عني</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#projects" class="nav-link">المشاريع</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#tips" class="nav-link">نصائح للنجاح</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#social" class="nav-link">التواصل</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title fade-in-up">مرحباً، أنا <span class="highlight">عماد بن شرنين</span></h1>
+                <p class="hero-subtitle fade-in-up delay-1">مطور تطبيقات الهاتف والمواقع الإلكترونية - طالب في جامعة الجزائر 1 الجامعة المركزية</p>
+                <div class="hero-buttons fade-in-up delay-2">
+                    <a href="#projects" class="btn primary-btn">عرض المشاريع</a>
+                    <a href="#social" class="btn secondary-btn">تواصل معي</a>
+                </div>
+            </div>
+            <div class="hero-image fade-in-right">
+                <div class="profile-image-container animated-border">
+                    <div class="wave-circle ripple-3d wave-3d-combo">
+                        <div class="particles">
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                        </div>
+                        <img src="images/imadbenchernine.jpg" alt="Imad Ben Chernine" class="profile-image glow-effect" onerror="this.src='images/default-profile.png'; this.onerror=null;">
+                        <div class="profile-image-click-hint">انقر للتأثيرات!</div>
+                        <div class="image-overlay">
+                            <span>عماد بن شرنين</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about-section">
+        <div class="container">
+            <h2 class="section-title">نبذة عني</h2>
+            <div class="about-simple">
+                <div class="about-text">
+                    <p class="about-description">
+                        أنا عماد بن شرنين، طالب في جامعة الجزائر 1 الجامعة المركزية. شغوف بمجال تطوير تطبيقات الهاتف والمواقع الإلكترونية.
+                        لدي خبرة في تطوير مشاريع متنوعة باستخدام أحدث التقنيات والأدوات. أؤمن بأن التعلم المستمر والابتكار 
+                        هما أساس النجاح في عالم التكنولوجيا.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Projects Section -->
+    <section id="projects" class="section projects-section">
+        <div class="container">
+            <h2 class="section-title">المشاريع</h2>
+            <div class="projects-grid">
+                <div class="project-card touch-ripple swipe-container">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <i class="fas fa-mosque"></i>
+                        </div>
+                        <div class="project-overlay">
+                            <a href="#" class="view-project">عرض المشروع</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Imad-Almuslim</h3>
+                        <p class="project-description">تطبيق ديني شامل يقدم مواقيت الصلاة، القرآن الكريم، والأذكار بشكل متطور</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Flutter</span>
+                            <span class="tech-tag">Dart</span>
+                            <span class="tech-tag">API Integration</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="project-overlay">
+                            <a href="#" class="view-project">عرض المشروع</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">IMSHOP</h3>
+                        <p class="project-description">تطبيق تسويق بالعمولة يربط بين البائعين والمسوقين لتحقيق مبيعات وعمولات</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Stripe API</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="project-overlay">
+                            <a href="#" class="view-project">عرض المشروع</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Moadaly</h3>
+                        <p class="project-description">نظام إدارة دراسية متكامل لتتبع النقاط والدرجات مع واجهة مستخدم بديهية</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Chart.js</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="project-overlay">
+                            <a href="#" class="view-project">عرض المشروع</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">SiteWeb Portfolio</h3>
+                        <p class="project-description">موقع شخصي احترافي يعرض المشاريع والمهارات مع تصميم عصري وجذاب</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Responsive Design</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Success Tips Section -->
+    <section id="tips" class="section tips-section">
+        <div class="container">
+            <h2 class="section-title">نصائح للنجاح</h2>
+            <div class="tips-content">
+                <div class="prayer-card">
+                    <div class="prayer-header">
+                        <i class="fas fa-pray"></i>
+                        <h3>دعاء لوالدي</h3>
+                    </div>
+                    <div class="prayer-text">
+                        <p>اللهم اغفر لأبي وارحمه وعافه واعف عنه وأكرم نزله ووسع مدخله واغسله بالماء والثلج والبرد</p>
+                        <p class="translation">O Allah, forgive my father, have mercy on him, heal him, pardon him, honor his station, widen his entrance, and wash him with water, snow, and hail</p>
+                    </div>
+                </div>
+                
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h3>البدايات الصغيرة</h3>
+                        <p>كل نجاح عظيم يبدأ بخطوة صغيرة. لا تحتقر أعمالك الصغيرة فهي أساس الإنجازات الكبرى.</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>التعلم المستمر</h3>
+                        <p>المعرفة قوة، والتعلم عملية مستمرة. اقرأ يومياً وطور مهاراتك باستمرار.</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3>تحديد الأهداف</h3>
+                        <p>ضع أهدافاً واضحة ومحددة، وقسمها إلى خطوات صغيرة قابلة للتنفيذ.</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>إدارة الوقت</h3>
+                        <p>الوقت ثروة لا تُسترجع. خطط ليومك وركز على الأولويات المهمة.</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>بناء العلاقات</h3>
+                        <p>النجاح الحقيقي يأتي من خلال التعاون والمساعدة المتبادلة مع الآخرين.</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>الصدق والأمانة</h3>
+                        <p>الصدق أساس الثقة، والأمانة طريق النجاح المستدام في الحياة.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section id="social" class="section social-section">
+        <div class="container">
+            <h2 class="section-title">تواصل معي</h2>
+            <div class="social-content">
+                <div class="profile-card">
+                    <img src="images/imadbenchernine.jpg" alt="Imad Ben Chernine" class="profile-image" onerror="this.src='images/default-profile.png'; this.onerror=null;">
+                    <div class="image-overlay">
+                        <span>عماد بن شرنين</span>
+                    </div>
+                    <div class="profile-info">
+                        <h3>عماد بن شرنين</h3>
+                        <p class="profile-title">مطور تطبيقات ومواقع إلكترونية</p>
+                        <p class="profile-university">جامعة الجزائر 1 الجامعة المركزية</p>
+                    </div>
+                </div>
+                
+                <div class="social-links-professional">
+                    <a href="https://github.com/imadbenchernine" target="_blank" class="social-link-pro touch-ripple">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://linkedin.com/in/imad-benchernine" target="_blank" class="social-link-pro touch-ripple">
+                        <i class="fab fa-linkedin-in"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://twitter.com/imad_benchernine" target="_blank" class="social-link-pro touch-ripple">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                    </a>
+                    <a href="https://facebook.com/imad.benchernine" target="_blank" class="social-link-pro touch-ripple">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Facebook</span>
+                    </a>
+                    <a href="https://instagram.com/imad_benchernine" target="_blank" class="social-link-pro touch-ripple">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="https://snapchat.com/add/imad_benchernine" target="_blank" class="social-link-pro touch-ripple">
+                        <i class="fab fa-snapchat-ghost"></i>
+                        <span>Snapchat</span>
+                    </a>
+                    <a href="https://youtube.com/@imadbenchernine" target="_blank" class="social-link-pro touch-ripple">
+                        <i class="fab fa-youtube"></i>
+                        <span>YouTube</span>
+                    </a>
+                    <a href="mailto:imad.benchernine@email.com" class="social-link-pro touch-ripple">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Interaction Hint -->
+    <div id="mobileHint" class="mobile-hint">
+        <div class="hint-content">
+            <i class="fas fa-mobile-alt"></i>
+            <p>هز الجهاز لرؤية تأثيرات ممتعة!</p>
+            <small>Shake your device for fun animations!</small>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy;  عماد بن شرنين. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="animations/mobile-animations.js"></script>
+</body>
+</html>

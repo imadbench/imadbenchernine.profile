@@ -1,0 +1,21 @@
+
+/* Gradient Rotation Animation */
+@keyframes rotateGradient {
+    0% { background: conic-gradient(from 0deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #3b82f6); }
+    25% { background: conic-gradient(from 90deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #3b82f6); }
+    50% { background: conic-gradient(from 180deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #3b82f6); }
+    75% { background: conic-gradient(from 270deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #3b82f6); }
+    100% { background: conic-gradient(from 360deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #3b82f6); }
+}
+
+/* Image Pulse Animation */
+@keyframes pulseImage {
+    0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+    }
+    50% { 
+        transform: scale(1.03); 
+        box-shadow: 0 0 40px rgba(139, 92, 246, 0.7);
+    }
+}

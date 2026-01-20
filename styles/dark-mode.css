@@ -1,0 +1,133 @@
+/* Dark Mode Styles */
+
+body.dark-mode {
+    --bg-primary: var(--dark-bg-primary);
+    --bg-secondary: var(--dark-bg-secondary);
+    --bg-card: var(--dark-bg-card);
+    
+    --text-primary: var(--dark-text-primary);
+    --text-secondary: var(--dark-text-secondary);
+    --text-tertiary: var(--dark-text-tertiary);
+    
+    --border-color: var(--dark-border-color);
+    --border-light: var(--dark-border-light);
+    
+    background-color: var(--dark-bg-primary);
+    color: var(--dark-text-primary);
+}
+
+/* Dark Mode Navigation */
+body.dark-mode .navbar {
+    background: rgba(15, 23, 42, 0.95);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .nav-link {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .nav-link:hover {
+    color: var(--primary-color);
+}
+
+/* Dark Mode Hero */
+body.dark-mode .hero {
+    background: linear-gradient(135deg, var(--dark-bg-secondary) 0%, #1e293b 100%);
+}
+
+body.dark-mode .hero::before {
+    background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.2) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 20%);
+}
+
+/* Dark Mode About Section */
+body.dark-mode .about-section {
+    background: var(--dark-bg-card);
+}
+
+body.dark-mode .about-simple {
+    background: var(--dark-bg-secondary);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark Mode Projects */
+body.dark-mode .projects-section {
+    background: var(--dark-bg-secondary);
+}
+
+body.dark-mode .project-card {
+    background: var(--dark-bg-card);
+    border-color: var(--dark-border-color);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .project-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .project-title {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .project-description {
+    color: var(--dark-text-secondary);
+}
+
+/* Dark Mode Social Section */
+body.dark-mode .social-section {
+    background: var(--dark-bg-primary);
+}
+
+body.dark-mode .social-link-pro {
+    background: var(--dark-bg-card);
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-primary);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .social-link-pro:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark Mode Footer */
+body.dark-mode .footer {
+    background: var(--dark-bg-secondary);
+    color: var(--dark-text-secondary);
+}
+
+/* Dark Mode Toggle Button */
+body.dark-mode .dark-mode-toggle {
+    background: var(--gradient-accent);
+    transform: rotate(15deg);
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+    transform: scale(1.1) rotate(30deg);
+}
+
+/* Responsive Dark Mode Adjustments */
+@media (max-width: 768px) {
+    body.dark-mode .nav-menu {
+        background-color: rgba(15, 23, 42, 0.98);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Smooth transitions for theme switching */
+* {
+    transition-property: background-color, color, border-color, box-shadow;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+/* Prevent transition on page load */
+body:not(.page-loaded) * {
+    transition: none;
+}
+
+/* Add loading class to body after page load */
+body.page-loaded {
+    transition: background-color 0.3s ease;
+}

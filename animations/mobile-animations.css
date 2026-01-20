@@ -1,0 +1,704 @@
+/* Mobile Touch Animations */
+
+/* Touch Ripple Effect for Mobile */
+.touch-ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.touch-ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease-out, height 0.6s ease-out;
+    pointer-events: none;
+}
+
+.touch-ripple:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Mobile Swipe Gestures */
+.swipe-container {
+    touch-action: pan-y;
+    user-select: none;
+}
+
+.swipe-left {
+    animation: swipeLeft 0.5s ease-out;
+}
+
+.swipe-right {
+    animation: swipeRight 0.5s ease-out;
+}
+
+@keyframes swipeLeft {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-50px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes swipeRight {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(50px); }
+    100% { transform: translateX(0); }
+}
+
+/* Mobile Shake Animation */
+.shake-mobile {
+    animation: shakeMobile 0.5s ease-in-out;
+}
+
+@keyframes shakeMobile {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Mobile Bounce Animation */
+.bounce-mobile {
+    animation: bounceMobile 0.6s ease;
+}
+
+@keyframes bounceMobile {
+    0%, 20%, 53%, 80%, 100% {
+        transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        transform: translate3d(0,0,0);
+    }
+    40%, 43% {
+        transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+        transform: translate3d(0, -30px, 0);
+    }
+    70% {
+        transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+        transform: translate3d(0, -15px, 0);
+    }
+    90% {
+        transform: translate3d(0,-4px,0);
+    }
+}
+
+/* Mobile Zoom Animation */
+.zoom-mobile {
+    animation: zoomMobile 0.3s ease-out;
+}
+
+@keyframes zoomMobile {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Mobile Pulse Animation */
+.pulse-mobile {
+    animation: pulseMobile 2s infinite;
+}
+
+@keyframes pulseMobile {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+    }
+}
+
+/* Mobile Flip Animation */
+.flip-mobile {
+    animation: flipMobile 0.8s ease;
+    transform-style: preserve-3d;
+}
+
+@keyframes flipMobile {
+    0% {
+        transform: perspective(400px) rotateY(0);
+    }
+    50% {
+        transform: perspective(400px) rotateY(180deg);
+    }
+    100% {
+        transform: perspective(400px) rotateY(360deg);
+    }
+}
+
+/* Mobile Slide Animations */
+.slide-up-mobile {
+    animation: slideUpMobile 0.5s ease-out;
+}
+
+.slide-down-mobile {
+    animation: slideDownMobile 0.5s ease-out;
+}
+
+@keyframes slideUpMobile {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDownMobile {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Mobile Rotation Animation */
+.rotate-mobile {
+    animation: rotateMobile 1s ease-in-out;
+}
+
+@keyframes rotateMobile {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mobile Wiggle Animation */
+.wiggle-mobile {
+    animation: wiggleMobile 0.5s ease-in-out;
+}
+
+@keyframes wiggleMobile {
+    0%, 7% { transform: rotateZ(0); }
+    15% { transform: rotateZ(-5deg); }
+    20% { transform: rotateZ(3deg); }
+    25% { transform: rotateZ(-3deg); }
+    30% { transform: rotateZ(2deg); }
+    35% { transform: rotateZ(-1deg); }
+    40%, 100% { transform: rotateZ(0); }
+}
+
+/* Mobile Pop Animation */
+.pop-mobile {
+    animation: popMobile 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popMobile {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Mobile Fade Animations */
+.fade-in-mobile {
+    animation: fadeInMobile 0.6s ease-out;
+}
+
+.fade-out-mobile {
+    animation: fadeOutMobile 0.6s ease-out;
+}
+
+@keyframes fadeInMobile {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOutMobile {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-20px); }
+}
+
+/* Mobile Combined Animations */
+.combo-bounce-pulse {
+    animation: comboBouncePulse 1.2s ease-in-out;
+}
+
+@keyframes comboBouncePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    75% {
+        transform: scale(1.05);
+    }
+}
+
+/* Mobile Interactive States */
+.mobile-pressed {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+}
+
+.mobile-hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+/* Mobile Long Press Animation */
+.long-press {
+    animation: longPress 1s ease-in-out infinite;
+}
+
+@keyframes longPress {
+    0% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(99, 102, 241, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+    }
+}
+
+/* Mobile Double Tap Animation */
+.double-tap {
+    animation: doubleTap 0.6s ease;
+}
+
+@keyframes doubleTap {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.2); }
+    50% { transform: scale(0.9); }
+    75% { transform: scale(1.1); }
+}
+
+/* Mobile Shake Horizontal */
+.shake-horizontal {
+    animation: shakeHorizontal 0.8s ease-in-out;
+}
+
+@keyframes shakeHorizontal {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+    20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+/* Mobile Shake Vertical */
+.shake-vertical {
+    animation: shakeVertical 0.8s ease-in-out;
+}
+
+@keyframes shakeVertical {
+    0%, 100% { transform: translateY(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateY(-10px); }
+    20%, 40%, 60%, 80% { transform: translateY(10px); }
+}
+
+/* Mobile Breathing Animation */
+.breathe-mobile {
+    animation: breatheMobile 3s ease-in-out infinite;
+}
+
+@keyframes breatheMobile {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Profile Image Rotating Animation */
+.rotate-profile {
+    animation: rotateProfile 4s linear infinite;
+    transform-origin: center;
+}
+
+@keyframes rotateProfile {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Profile Image Falling Animation */
+.fall-profile {
+    animation: fallProfile 2s ease-in forwards;
+}
+
+@keyframes fallProfile {
+    0% { 
+        transform: translateY(0) rotate(0deg); 
+        opacity: 1;
+    }
+    100% { 
+        transform: translateY(100px) rotate(360deg); 
+        opacity: 0;
+    }
+}
+
+/* Profile Image Bounce Animation */
+.bounce-profile {
+    animation: bounceProfile 1.5s ease-in-out infinite;
+}
+
+@keyframes bounceProfile {
+    0%, 100% { 
+        transform: translateY(0) scale(1); 
+    }
+    50% { 
+        transform: translateY(-30px) scale(1.1); 
+    }
+}
+
+/* Profile Image Swing Animation */
+.swing-profile {
+    animation: swingProfile 3s ease-in-out infinite;
+    transform-origin: top center;
+}
+
+@keyframes swingProfile {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+/* Profile Image Float Animation */
+.float-profile {
+    animation: floatProfile 4s ease-in-out infinite;
+}
+
+@keyframes floatProfile {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+    }
+    25% { 
+        transform: translateY(-20px) rotate(5deg); 
+    }
+    50% { 
+        transform: translateY(-10px) rotate(0deg); 
+    }
+    75% { 
+        transform: translateY(-25px) rotate(-5deg); 
+    }
+}
+
+/* Profile Image Spin and Fall Combo */
+.spin-fall {
+    animation: spinFall 3s ease-in forwards;
+}
+
+@keyframes spinFall {
+    0% { 
+        transform: rotate(0deg) translateY(0); 
+        opacity: 1;
+    }
+    50% { 
+        transform: rotate(180deg) translateY(-50px); 
+        opacity: 0.7;
+    }
+    100% { 
+        transform: rotate(360deg) translateY(100px); 
+        opacity: 0;
+    }
+}
+
+/* Profile Image Hover Effects */
+.profile-image-container:hover .profile-image {
+    animation: gentleRotate 10s linear infinite;
+}
+
+@keyframes gentleRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Click-triggered animations */
+.click-rotate {
+    animation: clickRotate 0.8s ease;
+}
+
+@keyframes clickRotate {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(90deg); }
+    50% { transform: rotate(180deg); }
+    75% { transform: rotate(270deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.click-fall {
+    animation: clickFall 1.2s ease-out forwards;
+}
+
+@keyframes clickFall {
+    0% { 
+        transform: translateY(0) rotate(0deg); 
+        opacity: 1;
+    }
+    30% { 
+        transform: translateY(-20px) rotate(120deg); 
+        opacity: 0.8;
+    }
+    100% { 
+        transform: translateY(200px) rotate(720deg); 
+        opacity: 0;
+    }
+}
+
+/* Continuous spinning for mobile */
+.continuous-spin {
+    animation: continuousSpin 8s linear infinite;
+}
+
+@keyframes continuousSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Circular Wave Animation */
+.wave-circle {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.wave-circle::before,
+.wave-circle::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(59, 130, 246, 0.1) 60deg,
+        rgba(139, 92, 246, 0.2) 120deg,
+        rgba(236, 72, 153, 0.2) 180deg,
+        rgba(245, 158, 11, 0.2) 240deg,
+        rgba(59, 130, 246, 0.1) 300deg,
+        transparent 360deg
+    );
+    animation: waveRotate 6s linear infinite;
+    z-index: 3;
+    opacity: 0.7;
+}
+
+.wave-circle::after {
+    animation: waveRotateReverse 8s linear infinite;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(236, 72, 153, 0.1) 45deg,
+        rgba(245, 158, 11, 0.2) 90deg,
+        rgba(59, 130, 246, 0.3) 135deg,
+        rgba(139, 92, 246, 0.2) 180deg,
+        rgba(236, 72, 153, 0.1) 225deg,
+        transparent 270deg
+    );
+}
+
+@keyframes waveRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes waveRotateReverse {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+}
+
+/* 3D Ripple Effect */
+.ripple-3d {
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.ripple-3d::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle at center,
+        rgba(59, 130, 246, 0.1) 0%,
+        rgba(139, 92, 246, 0.05) 30%,
+        transparent 70%
+    );
+    animation: ripplePulse 3s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes ripplePulse {
+    0%, 100% { 
+        transform: scale(0.8) translateZ(0px); 
+        opacity: 0.3;
+    }
+    50% { 
+        transform: scale(1.2) translateZ(20px); 
+        opacity: 0.7;
+    }
+}
+
+/* Animated Border Gradient */
+.animated-border {
+    position: relative;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b);
+    background-size: 300% 300%;
+    animation: borderGradient 4s ease infinite;
+    padding: 4px;
+    border-radius: 50%;
+}
+
+.animated-border::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    background: white;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+@keyframes borderGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Floating Particles Effect */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(59, 130, 246, 0.6);
+    border-radius: 50%;
+    animation: floatParticle 6s linear infinite;
+}
+
+.particle:nth-child(1) { 
+    top: 20%; 
+    left: 10%; 
+    animation-delay: 0s; 
+    background: rgba(59, 130, 246, 0.6);
+}
+
+.particle:nth-child(2) { 
+    top: 60%; 
+    left: 80%; 
+    animation-delay: 1s; 
+    background: rgba(139, 92, 246, 0.6);
+}
+
+.particle:nth-child(3) { 
+    top: 80%; 
+    left: 30%; 
+    animation-delay: 2s; 
+    background: rgba(236, 72, 153, 0.6);
+}
+
+.particle:nth-child(4) { 
+    top: 40%; 
+    left: 70%; 
+    animation-delay: 3s; 
+    background: rgba(245, 158, 11, 0.6);
+}
+
+.particle:nth-child(5) { 
+    top: 10%; 
+    left: 50%; 
+    animation-delay: 4s; 
+    background: rgba(59, 130, 246, 0.6);
+}
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(0) translateX(0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        transform: translateY(-100px) translateX(50px) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Glowing Effect */
+.glow-effect {
+    box-shadow: 
+        0 0 20px rgba(59, 130, 246, 0.5),
+        0 0 40px rgba(139, 92, 246, 0.3),
+        0 0 60px rgba(236, 72, 153, 0.2);
+    animation: glowPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+    0% {
+        box-shadow: 
+            0 0 20px rgba(59, 130, 246, 0.5),
+            0 0 40px rgba(139, 92, 246, 0.3),
+            0 0 60px rgba(236, 72, 153, 0.2);
+    }
+    100% {
+        box-shadow: 
+            0 0 30px rgba(59, 130, 246, 0.7),
+            0 0 50px rgba(139, 92, 246, 0.5),
+            0 0 70px rgba(236, 72, 153, 0.3);
+    }
+}
+
+/* Combined Wave and 3D Effect */
+.wave-3d-combo {
+    animation: comboWave 5s ease-in-out infinite;
+}
+
+@keyframes comboWave {
+    0%, 100% { 
+        transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1); 
+    }
+    25% { 
+        transform: perspective(1000px) rotateX(-5deg) rotateY(-5deg) scale(1.02); 
+    }
+    50% { 
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(0.98); 
+    }
+    75% { 
+        transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) scale(1.01); 
+    }
+}
