@@ -627,11 +627,267 @@ window.Portfolio = {
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
         return isDark;
     },
-    createRippleEffect
+    createRippleEffect,
+    initLightbox
 };
+
+// Initialize lightbox functionality
+function initLightbox() {
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    
+    galleryItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            // Prevent triggering if clicking on the zoom icon
+            if (e.target.closest('.gallery-zoom-icon')) {
+                e.preventDefault();
+                return;
+            }
+            
+            const img = this.querySelector('.gallery-image');
+            const lightbox = document.createElement('div');
+            lightbox.className = 'lightbox';
+            
+            const lightboxImg = document.createElement('img');
+            lightboxImg.className = 'lightbox-content';
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
+            
+            const closeBtn = document.createElement('div');
+            closeBtn.className = 'lightbox-close';
+            closeBtn.innerHTML = '&times;';
+            
+            lightbox.appendChild(lightboxImg);
+            lightbox.appendChild(closeBtn);
+            document.body.appendChild(lightbox);
+            
+            // Show lightbox
+            setTimeout(() => {
+                lightbox.classList.add('active');
+            }, 10);
+            
+            // Close lightbox
+            const closeLightbox = () => {
+                lightbox.classList.remove('active');
+                setTimeout(() => {
+                    if (lightbox.parentNode) {
+                        lightbox.parentNode.removeChild(lightbox);
+                    }
+                }, 300);
+            };
+            
+            closeBtn.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+            
+            // Close with ESC key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                }
+            });
+        });
+    });
+}
 
 // Initialize mobile menu on DOM load
 document.addEventListener('DOMContentLoaded', initMobileMenu);
 
+// Initialize lightbox on DOM load
+document.addEventListener('DOMContentLoaded', initLightbox);
+
+// Ghost Orbiting Animation with Enhanced Ghostly Explosions
+function initGhostOrbiting() {
+    const ghost1 = document.getElementById('ghost1');
+    const ghost2 = document.getElementById('ghost2');
+    const ghost3 = document.getElementById('ghost3');
+    const ghost4 = document.getElementById('ghost4');
+    const ghost5 = document.getElementById('ghost5');
+    const ghost6 = document.getElementById('ghost6');
+    const profileImg = document.getElementById('profile-img');
+    
+    // Ensure profile image is visible immediately
+    if (profileImg) {
+        profileImg.style.opacity = '1';
+        profileImg.style.transform = 'scale(1)';
+        profileImg.style.zIndex = '10';
+        profileImg.classList.add('show-profile');
+        
+        // Ensure the image is displayed
+        profileImg.style.display = 'block';
+    }
+    
+    // Set up periodic ghost explosions
+    setInterval(() => {
+        createEnhancedGhostExplosion();
+    }, 4000); // Every 4 seconds
+    
+    console.log('Ghost orbiting animation with enhanced ghostly explosions initialized');
+}
+
+// Create enhanced ghostly explosion effect
+function createEnhancedGhostExplosion() {
+    const container = document.querySelector('.ghost-animation-container');
+    
+    if (!container) return;
+    
+    // Create explosion container
+    const explosion = document.createElement('div');
+    explosion.className = 'ghost-explosion';
+    
+    // Create ethereal glow effect
+    const glow = document.createElement('div');
+    glow.className = 'ghostly-glow';
+    explosion.appendChild(glow);
+    
+    // Create particles for explosion
+    for (let i = 0; i < 40; i++) { // Increased to 40 particles
+        const particle = document.createElement('div');
+        particle.className = 'ghost-particle';
+        
+        // Random ghostly colors
+        const colors = ['#cbd5e1', '#94a3b8', '#64748b', '#475569', '#334155', '#1e293b', '#e2e8f0', '#f1f5f9'];
+        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Position at center initially
+        particle.style.left = '50%';
+        particle.style.top = '50%';
+        
+        explosion.appendChild(particle);
+        
+        // Animate particle
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 30 + Math.random() * 80;
+        const duration = 0.6 + Math.random() * 1.2;
+        
+        particle.animate([
+            { 
+                transform: 'translate(-50%, -50%) scale(1)',
+                opacity: 1
+            },
+            { 
+                transform: `translate(-50%, -50%) translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`,
+                opacity: 0
+            }
+        ], {
+            duration: duration * 1000,
+            easing: 'ease-out'
+        });
+        
+        // Remove particle after animation
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        }, duration * 1000);
+    }
+    
+    // Create ghostly puffs
+    for (let i = 0; i < 20; i++) { // Increased to 20 puffs
+        const puff = document.createElement('div');
+        puff.className = 'ghostly-puff';
+        
+        // Random position around center
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 15 + Math.random() * 50;
+        const x = 50 + Math.cos(angle) * distance;
+        const y = 50 + Math.sin(angle) * distance;
+        
+        puff.style.left = `${x}%`;
+        puff.style.top = `${y}%`;
+        
+        explosion.appendChild(puff);
+        
+        // Remove puff after animation
+        setTimeout(() => {
+            if (puff.parentNode) {
+                puff.parentNode.removeChild(puff);
+            }
+        }, 1500);
+    }
+    
+    // Create additional visual effects
+    for (let i = 0; i < 15; i++) {
+        const visualEffect = document.createElement('div');
+        visualEffect.className = 'ghostly-puff';
+        
+        // Random position and size for visual effects
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 20 + Math.random() * 60;
+        const x = 50 + Math.cos(angle) * distance;
+        const y = 50 + Math.sin(angle) * distance;
+        
+        visualEffect.style.left = `${x}%`;
+        visualEffect.style.top = `${y}%`;
+        visualEffect.style.width = `${8 + Math.random() * 10}px`;
+        visualEffect.style.height = `${8 + Math.random() * 10}px`;
+        
+        // Random bright ghostly color
+        const brightColors = ['rgba(207, 217, 227, 0.7)', 'rgba(148, 163, 184, 0.7)', 'rgba(160, 174, 192, 0.7)', 'rgba(226, 232, 240, 0.8)'];
+        visualEffect.style.backgroundColor = brightColors[Math.floor(Math.random() * brightColors.length)];
+        
+        explosion.appendChild(visualEffect);
+        
+        // Animate the visual effect
+        const duration = 1.0 + Math.random() * 0.8;
+        visualEffect.animate([
+            { 
+                transform: 'scale(0.5)',
+                opacity: 1
+            },
+            { 
+                transform: 'scale(3)',
+                opacity: 0
+            }
+        ], {
+            duration: duration * 1000,
+            easing: 'ease-out'
+        });
+        
+        // Remove visual effect after animation
+        setTimeout(() => {
+            if (visualEffect.parentNode) {
+                visualEffect.parentNode.removeChild(visualEffect);
+            }
+        }, duration * 1000);
+    }
+    
+    container.appendChild(explosion);
+    
+    // Make explosion visible
+    setTimeout(() => {
+        explosion.style.opacity = '1';
+    }, 10);
+    
+    // Remove explosion after animation
+    setTimeout(() => {
+        if (explosion.parentNode) {
+            explosion.parentNode.removeChild(explosion);
+        }
+    }, 1800);
+}
+
+// Initialize ghost orbiting after DOM loads
+setTimeout(initGhostOrbiting, 1000);
+
 // Also initialize after a short delay to ensure all elements are loaded
+setTimeout(initGhostOrbiting, 2000);
+
+// Ensure profile image is visible immediately
+window.addEventListener('load', function() {
+    const profileImg = document.getElementById('profile-img');
+    if (profileImg) {
+        // Make sure profile image is visible
+        profileImg.style.opacity = '1';
+        profileImg.style.transform = 'scale(1)';
+        profileImg.style.zIndex = '10';
+        profileImg.style.display = 'block';
+        profileImg.classList.add('show-profile');
+    }
+});
+
+// Also initialize mobile menu on DOM load
 setTimeout(initMobileMenu, 500);
+setTimeout(initLightbox, 500);

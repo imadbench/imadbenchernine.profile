@@ -62,20 +62,15 @@
             </div>
             <div class="hero-image fade-in-right">
                 <div class="profile-image-container animated-border">
-                    <div class="wave-circle ripple-3d wave-3d-combo">
-                        <div class="particles">
-                            <div class="particle"></div>
-                            <div class="particle"></div>
-                            <div class="particle"></div>
-                            <div class="particle"></div>
-                            <div class="particle"></div>
-                        </div>
-                        <img src="images/imadbenchernine.jpg" alt="Imad Ben Chernine" class="profile-image glow-effect" onerror="this.src='images/default-profile.png'; this.onerror=null;">
-                        <div class="profile-image-click-hint">انقر للتأثيرات!</div>
-                        <div class="image-overlay">
-                            <span>عماد بن شرنين</span>
-                        </div>
+                    <div class="continuous-morph"></div>
+                    <div class="wave-animation-container">
+                        <div class="smooth-wave"></div>
+                        <div class="smooth-wave"></div>
+                        <div class="smooth-wave"></div>
                     </div>
+                    <img src="images/imadbenchernine.jpg" alt="Imad Ben Chernine" class="profile-image subtle-glow" onerror="this.src='images/default-profile.png'; this.onerror=null;">
+                    <div class="profile-image-click-hint">انقر للتأثيرات!</div>
+                </div>
                 </div>
             </div>
         </div>
@@ -104,7 +99,7 @@
         <div class="container">
             <h2 class="section-title">المشاريع</h2>
             <div class="projects-grid">
-                <div class="project-card touch-ripple swipe-container">
+                <div class="project-card swipe-container">
                     <div class="project-image">
                         <div class="project-placeholder">
                             <i class="fas fa-mosque"></i>
@@ -191,6 +186,66 @@
 
 
 
+    <!-- Photo Gallery Section -->
+    <section id="gallery" class="section gallery-section">
+        <div class="container">
+            <h2 class="section-title">معرض الصور</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/imad ben chernine 2.jpg" alt="Imad Ben Chernine 2" class="gallery-image" loading="lazy">
+                    <div class="gallery-zoom-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>عماد بن شرنين</h3>
+                            <p>مواقع التواصل الاجتماعي</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="images/imad ben chernine3.jpg" alt="Imad Ben Chernine 3" class="gallery-image" loading="lazy">
+                    <div class="gallery-zoom-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>عماد بن شرنين</h3>
+                            <p>مواقع التواصل الاجتماعي</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="images/imadbencernine4.jpg" alt="Imad Ben Chernine 4" class="gallery-image" loading="lazy">
+                    <div class="gallery-zoom-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>عماد بن شرنين</h3>
+                            <p>مواقع التواصل الاجتماعي</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="images/imadbenchernine5.jpg" alt="Imad Ben Chernine 5" class="gallery-image" loading="lazy">
+                    <div class="gallery-zoom-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>عماد بن شرنين</h3>
+                            <p>مواقع التواصل الاجتماعي</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Success Tips Section -->
     <section id="tips" class="section tips-section">
         <div class="container">
@@ -266,47 +321,85 @@
             <h2 class="section-title">تواصل معي</h2>
             <div class="social-content">
                 <div class="profile-card">
-                    <img src="images/imadbenchernine.jpg" alt="Imad Ben Chernine" class="profile-image" onerror="this.src='images/default-profile.png'; this.onerror=null;">
+                    <div class="ghost-animation-container">
+                        <!-- Multiple Ghosts Around Profile Image -->
+                        <svg id="ghost1" class="ghost-svg ghost-1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20,50 C20,20 40,10 50,10 C60,10 80,20 80,50 C80,70 75,80 65,80 C60,85 55,85 50,80 C45,85 40,85 35,80 C25,80 20,70 20,50 Z" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1.5" />
+                            <circle cx="35" cy="40" r="4" fill="#64748b" />
+                            <circle cx="65" cy="40" r="4" fill="#64748b" />
+                            <path d="M40,60 Q50,75 60,60" stroke="#64748b" stroke-width="2" fill="none" /> <!-- Smile path -->
+                        </svg>
+                        <svg id="ghost2" class="ghost-svg ghost-2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20,50 C20,20 40,10 50,10 C60,10 80,20 80,50 C80,70 75,80 65,80 C60,85 55,85 50,80 C45,85 40,85 35,80 C25,80 20,70 20,50 Z" fill="#94a3b8" stroke="#64748b" stroke-width="1.5" />
+                            <circle cx="35" cy="40" r="4" fill="#475569" />
+                            <circle cx="65" cy="40" r="4" fill="#475569" />
+                            <path d="M40,60 Q50,70 60,60" stroke="#334155" stroke-width="1.5" fill="none" />
+                        </svg>
+                        <svg id="ghost3" class="ghost-svg ghost-3" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20,50 C20,20 40,10 50,10 C60,10 80,20 80,50 C80,70 75,80 65,80 C60,85 55,85 50,80 C45,85 40,85 35,80 C25,80 20,70 20,50 Z" fill="#64748b" stroke="#475569" stroke-width="1.5" />
+                            <circle cx="35" cy="40" r="4" fill="#334155" />
+                            <circle cx="65" cy="40" r="4" fill="#334155" />
+                            <path d="M40,60 Q50,70 60,60" stroke="#1e293b" stroke-width="1.5" fill="none" />
+                        </svg>
+                        <svg id="ghost4" class="ghost-svg ghost-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20,50 C20,20 40,10 50,10 C60,10 80,20 80,50 C80,70 75,80 65,80 C60,85 55,85 50,80 C45,85 40,85 35,80 C25,80 20,70 20,50 Z" fill="#475569" stroke="#334155" stroke-width="1.5" />
+                            <circle cx="35" cy="40" r="4" fill="#1e293b" />
+                            <circle cx="65" cy="40" r="4" fill="#1e293b" />
+                            <path d="M40,60 Q50,70 60,60" stroke="#0f172a" stroke-width="1.5" fill="none" />
+                        </svg>
+                        <svg id="ghost5" class="ghost-svg ghost-5" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20,50 C20,20 40,10 50,10 C60,10 80,20 80,50 C80,70 75,80 65,80 C60,85 55,85 50,80 C45,85 40,85 35,80 C25,80 20,70 20,50 Z" fill="#334155" stroke="#1e293b" stroke-width="1.5" />
+                            <circle cx="35" cy="40" r="4" fill="#0f172a" />
+                            <circle cx="65" cy="40" r="4" fill="#0f172a" />
+                            <path d="M40,60 Q50,70 60,60" stroke="#0c0a0f" stroke-width="1.5" fill="none" />
+                        </svg>
+                        <svg id="ghost6" class="ghost-svg ghost-6" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20,50 C20,20 40,10 50,10 C60,10 80,20 80,50 C80,70 75,80 65,80 C60,85 55,85 50,80 C45,85 40,85 35,80 C25,80 20,70 20,50 Z" fill="#1e293b" stroke="#0f172a" stroke-width="1.5" />
+                            <circle cx="35" cy="40" r="4" fill="#0c0a0f" />
+                            <circle cx="65" cy="40" r="4" fill="#0c0a0f" />
+                            <path d="M40,60 Q50,70 60,60" stroke="#0a080d" stroke-width="1.5" fill="none" />
+                        </svg>
+                        <img id="profile-img" src="images/imadbenchernine.jpg" alt="Imad Ben Chernine" class="profile-image animated-profile" onerror="this.src='images/imadbenchernine5.jpg'; this.onerror=null;">
+                    </div>
                     <div class="image-overlay">
                         <span>عماد بن شرنين</span>
                     </div>
                     <div class="profile-info">
-                        <h3>عماد بن شرنين</h3>
-                        <p class="profile-title">مطور تطبيقات ومواقع إلكترونية</p>
-                        <p class="profile-university">جامعة الجزائر 1 الجامعة المركزية</p>
+                        <h3>Imad Ben Chernine</h3>
+                        <p class="profile-title">مواقع التواصل الاجتماعي</p>
                     </div>
                 </div>
                 
                 <div class="social-links-professional">
-                    <a href="https://github.com/imadbenchernine" target="_blank" class="social-link-pro touch-ripple">
+                    <a href="https://github.com/imadbenchernine" target="_blank" class="social-link-pro">
                         <i class="fab fa-github"></i>
                         <span>GitHub</span>
                     </a>
-                    <a href="https://linkedin.com/in/imad-benchernine" target="_blank" class="social-link-pro touch-ripple">
+                    <a href="https://linkedin.com/in/imad-benchernine" target="_blank" class="social-link-pro">
                         <i class="fab fa-linkedin-in"></i>
                         <span>LinkedIn</span>
                     </a>
-                    <a href="https://twitter.com/imad_benchernine" target="_blank" class="social-link-pro touch-ripple">
+                    <a href="https://twitter.com/imad_benchernine" target="_blank" class="social-link-pro">
                         <i class="fab fa-twitter"></i>
                         <span>Twitter</span>
                     </a>
-                    <a href="https://facebook.com/imad.benchernine" target="_blank" class="social-link-pro touch-ripple">
+                    <a href="https://www.facebook.com/share/1AZH9mGe4Z/" target="_blank" class="social-link-pro">
                         <i class="fab fa-facebook-f"></i>
                         <span>Facebook</span>
                     </a>
-                    <a href="https://instagram.com/imad_benchernine" target="_blank" class="social-link-pro touch-ripple">
+                    <a href="https://www.instagram.com/imadbenchernine?igsh=bnNjajkxaHRqNGp3" target="_blank" class="social-link-pro">
                         <i class="fab fa-instagram"></i>
                         <span>Instagram</span>
                     </a>
-                    <a href="https://snapchat.com/add/imad_benchernine" target="_blank" class="social-link-pro touch-ripple">
+                    <a href="https://www.snapchat.com/add/ibenchernin2021?share_id=njywSw-2nPw&locale=en-US" target="_blank" class="social-link-pro">
                         <i class="fab fa-snapchat-ghost"></i>
                         <span>Snapchat</span>
                     </a>
-                    <a href="https://youtube.com/@imadbenchernine" target="_blank" class="social-link-pro touch-ripple">
+                    <a href="https://youtube.com/@imadbenchernine" target="_blank" class="social-link-pro">
                         <i class="fab fa-youtube"></i>
                         <span>YouTube</span>
                     </a>
-                    <a href="mailto:imad.benchernine@email.com" class="social-link-pro touch-ripple">
+                    <a href="mailto:Imadbenchernine70@gmail.com" class="social-link-pro">
                         <i class="fas fa-envelope"></i>
                         <span>Email</span>
                     </a>
