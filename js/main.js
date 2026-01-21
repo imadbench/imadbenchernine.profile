@@ -719,10 +719,21 @@ function initGhostOrbiting() {
         profileImg.style.display = 'block';
     }
     
-    // Set up periodic ghost explosions
+    // Set up periodic ghost explosions with screen-size-adjusted intervals
+    let explosionInterval;
+    
+    // Adjust interval based on screen size for performance
+    if (window.innerWidth <= 480) {
+        explosionInterval = 6000; // Less frequent on small screens for performance
+    } else if (window.innerWidth <= 768) {
+        explosionInterval = 5000; // Slightly less frequent on medium screens
+    } else {
+        explosionInterval = 4000; // Default frequency on larger screens
+    }
+    
     setInterval(() => {
         createEnhancedGhostExplosion();
-    }, 4000); // Every 4 seconds
+    }, explosionInterval); // Adjusted interval based on screen size
     
     console.log('Ghost orbiting animation with enhanced ghostly explosions initialized');
 }
@@ -732,6 +743,25 @@ function createEnhancedGhostExplosion() {
     const container = document.querySelector('.ghost-animation-container');
     
     if (!container) return;
+    
+    // Adjust particle counts based on screen size for better performance
+    let particleCount = 40;
+    let puffCount = 20;
+    let effectCount = 15;
+    
+    if (window.innerWidth <= 480) {
+        particleCount = 15;  // Much fewer particles on small screens to prevent overflow
+        puffCount = 8;
+        effectCount = 6;
+    } else if (window.innerWidth <= 768) {
+        particleCount = 20;
+        puffCount = 12;
+        effectCount = 9;
+    } else {
+        particleCount = 30;
+        puffCount = 15;
+        effectCount = 12;
+    }
     
     // Create explosion container
     const explosion = document.createElement('div');
@@ -743,7 +773,7 @@ function createEnhancedGhostExplosion() {
     explosion.appendChild(glow);
     
     // Create particles for explosion
-    for (let i = 0; i < 40; i++) { // Increased to 40 particles
+    for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'ghost-particle';
         
@@ -757,9 +787,17 @@ function createEnhancedGhostExplosion() {
         
         explosion.appendChild(particle);
         
-        // Animate particle
+        // Animate particle with screen-size-adjusted distances to prevent overflow
         const angle = Math.random() * Math.PI * 2;
-        const distance = 30 + Math.random() * 80;
+        let distance;
+        if (window.innerWidth <= 480) {
+            distance = 15 + Math.random() * 35;  // Much shorter distances on small screens
+        } else if (window.innerWidth <= 768) {
+            distance = 20 + Math.random() * 45;
+        } else {
+            distance = 25 + Math.random() * 60;  // Original distances reduced to prevent overflow
+        }
+        
         const duration = 0.6 + Math.random() * 1.2;
         
         particle.animate([
@@ -785,13 +823,21 @@ function createEnhancedGhostExplosion() {
     }
     
     // Create ghostly puffs
-    for (let i = 0; i < 20; i++) { // Increased to 20 puffs
+    for (let i = 0; i < puffCount; i++) {
         const puff = document.createElement('div');
         puff.className = 'ghostly-puff';
         
         // Random position around center
         const angle = Math.random() * Math.PI * 2;
-        const distance = 15 + Math.random() * 50;
+        let distance;
+        if (window.innerWidth <= 480) {
+            distance = 8 + Math.random() * 25;  // Much shorter distances on small screens
+        } else if (window.innerWidth <= 768) {
+            distance = 10 + Math.random() * 30;
+        } else {
+            distance = 12 + Math.random() * 40;  // Original distances reduced
+        }
+        
         const x = 50 + Math.cos(angle) * distance;
         const y = 50 + Math.sin(angle) * distance;
         
@@ -809,20 +855,38 @@ function createEnhancedGhostExplosion() {
     }
     
     // Create additional visual effects
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < effectCount; i++) {
         const visualEffect = document.createElement('div');
         visualEffect.className = 'ghostly-puff';
         
         // Random position and size for visual effects
         const angle = Math.random() * Math.PI * 2;
-        const distance = 20 + Math.random() * 60;
+        let distance;
+        if (window.innerWidth <= 480) {
+            distance = 10 + Math.random() * 30;  // Much shorter distances on small screens
+        } else if (window.innerWidth <= 768) {
+            distance = 12 + Math.random() * 35;
+        } else {
+            distance = 15 + Math.random() * 45;  // Original distances reduced
+        }
+        
         const x = 50 + Math.cos(angle) * distance;
         const y = 50 + Math.sin(angle) * distance;
         
         visualEffect.style.left = `${x}%`;
         visualEffect.style.top = `${y}%`;
-        visualEffect.style.width = `${8 + Math.random() * 10}px`;
-        visualEffect.style.height = `${8 + Math.random() * 10}px`;
+        
+        // Adjust size based on screen size to prevent overflow
+        if (window.innerWidth <= 480) {
+            visualEffect.style.width = `${5 + Math.random() * 5}px`;
+            visualEffect.style.height = `${5 + Math.random() * 5}px`;
+        } else if (window.innerWidth <= 768) {
+            visualEffect.style.width = `${6 + Math.random() * 6}px`;
+            visualEffect.style.height = `${6 + Math.random() * 6}px`;
+        } else {
+            visualEffect.style.width = `${7 + Math.random() * 7}px`;
+            visualEffect.style.height = `${7 + Math.random() * 7}px`;
+        }
         
         // Random bright ghostly color
         const brightColors = ['rgba(207, 217, 227, 0.7)', 'rgba(148, 163, 184, 0.7)', 'rgba(160, 174, 192, 0.7)', 'rgba(226, 232, 240, 0.8)'];
@@ -830,15 +894,24 @@ function createEnhancedGhostExplosion() {
         
         explosion.appendChild(visualEffect);
         
-        // Animate the visual effect
+        // Animate the visual effect with reduced scale to prevent overflow
         const duration = 1.0 + Math.random() * 0.8;
+        let maxScale;
+        if (window.innerWidth <= 480) {
+            maxScale = 1.8;  // Much smaller scale on small screens
+        } else if (window.innerWidth <= 768) {
+            maxScale = 2.2;
+        } else {
+            maxScale = 2.5;  // Reduced from original scale of 3
+        }
+        
         visualEffect.animate([
             { 
                 transform: 'scale(0.5)',
                 opacity: 1
             },
             { 
-                transform: 'scale(3)',
+                transform: `scale(${maxScale})`,
                 opacity: 0
             }
         ], {
