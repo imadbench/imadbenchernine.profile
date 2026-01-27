@@ -60,14 +60,24 @@ function initNavigation() {
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    // Sticky navbar
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+    // Optimized sticky navbar with throttling
+    let navTicking = false;
+    
+    function updateNavbar() {
+        if (!navTicking) {
+            requestAnimationFrame(() => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+                navTicking = false;
+            });
+            navTicking = true;
         }
-    });
+    }
+    
+    window.addEventListener('scroll', updateNavbar, { passive: true });
 
     // Mobile menu toggle
     if (hamburger && navMenu) {
@@ -172,8 +182,11 @@ function initMobileMenu() {
     console.log('✅ Mobile menu initialized');
 }
 
-// Scroll-based Animations
+// Scroll-based Animations with Performance Optimization
 function initScrollAnimations() {
+    // Throttle scroll events for better performance
+    let ticking = false;
+    
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -196,7 +209,28 @@ function initScrollAnimations() {
     const animateElements = document.querySelectorAll('.scroll-reveal, .skill-card, .project-card, .timeline-item');
     animateElements.forEach(el => observer.observe(el));
 
-    // Parallax effect for hero section
+    // Optimized parallax effect for hero section
+    function updateParallax() {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                
+                const hero = document.querySelector('.hero');
+                if (hero) {
+                    hero.style.transform = `translate3d(0, ${rate}px, 0)`;
+                }
+                
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    // Throttled scroll listener
+    window.addEventListener('scroll', updateParallax, { passive: true });
+    
+    // Background parallax effect
     window.addEventListener('scroll', () => {
         const scrolled = window.pageYOffset;
         const parallax = document.querySelector('.hero');
@@ -205,7 +239,7 @@ function initScrollAnimations() {
         if (parallax) {
             parallax.style.backgroundPositionY = `${speed}px`;
         }
-    });
+    }, { passive: true });
 }
 
 // Skill Bar Animations
@@ -948,6 +982,1154 @@ setTimeout(initGhostOrbiting, 1000);
 // Also initialize after a short delay to ensure all elements are loaded
 setTimeout(initGhostOrbiting, 2000);
 
+// Shake Detection for Background Color Changes
+let lastShakeTime = 0;
+let currentColorIndex = 0;
+
+// Beautiful gradient color palette
+const gradientColors = [
+    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', // Purple
+    'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', // Pink
+    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', // Blue
+    'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)', // Green
+    'linear-gradient(135deg, #fa709a 0%, #fee140 100%)', // Orange
+    'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)', // Soft Pastel
+    'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)', // Rose
+    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'  // Back to purple
+];
+
+function initShakeDetection() {
+    // Show indicator that shake feature is available
+    const indicator = document.getElementById('shakeIndicator');
+    if (indicator) {
+        setTimeout(() => {
+            indicator.classList.add('show');
+            // Hide indicator after 5 seconds
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 5000);
+        }, 3000);
+    }
+    
+    if (window.DeviceMotionEvent) {
+        let lastAcceleration = { x: 0, y: 0, z: 0 };
+        let shakeThreshold = 12; // Reduced sensitivity threshold for better detection
+        
+        window.addEventListener('devicemotion', (e) => {
+            const acceleration = e.accelerationIncludingGravity;
+            if (!acceleration) return;
+            
+            const deltaX = Math.abs(acceleration.x - lastAcceleration.x);
+            const deltaY = Math.abs(acceleration.y - lastAcceleration.y);
+            const deltaZ = Math.abs(acceleration.z - lastAcceleration.z);
+            
+            // Check if shake detected - more sensitive detection
+            const shakeIntensity = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+            
+            if (shakeIntensity > shakeThreshold) {
+                const currentTime = Date.now();
+                // Debounce shakes to prevent rapid color changes
+                if (currentTime - lastShakeTime > 800) { // Reduced debounce time
+                    changeBackgroundColor();
+                    lastShakeTime = currentTime;
+                    // Show indicator temporarily when color changes
+                    if (indicator) {
+                        indicator.classList.add('show');
+                        setTimeout(() => {
+                            indicator.classList.remove('show');
+                        }, 2000);
+                    }
+                }
+            }
+            
+            lastAcceleration = {
+                x: acceleration.x,
+                y: acceleration.y,
+                z: acceleration.z
+            };
+        });
+        
+        console.log('✅ Shake detection initialized');
+    } else {
+        // Fallback: Add keyboard shortcut for testing
+        document.addEventListener('keydown', (e) => {
+            // Press 'C' key to change background color
+            if (e.key.toLowerCase() === 'c') {
+                const currentTime = Date.now();
+                if (currentTime - lastShakeTime > 800) {
+                    changeBackgroundColor();
+                    lastShakeTime = currentTime;
+                    // Show indicator when using keyboard shortcut
+                    const indicator = document.getElementById('shakeIndicator');
+                    if (indicator) {
+                        indicator.classList.add('show');
+                        setTimeout(() => {
+                            indicator.classList.remove('show');
+                        }, 2000);
+                    }
+                }
+            }
+        });
+        
+        console.log('⚠️ Device motion not supported - use C key to change colors');
+    }
+}
+
+function changeBackgroundColor() {
+    const body = document.body;
+    
+    // Cycle through colors
+    currentColorIndex = (currentColorIndex + 1) % gradientColors.length;
+    
+    // Apply new gradient with smooth transition
+    body.style.background = gradientColors[currentColorIndex];
+    body.style.transition = 'background 1.5s ease-in-out';
+    
+    // Add visual feedback
+    createShakeVisualEffect();
+    
+    // Trigger haptic feedback if available
+    if (navigator.vibrate) {
+        navigator.vibrate([50, 30, 50]); // Short vibration pattern
+    }
+    
+    console.log(`🎨 Background changed to color ${currentColorIndex + 1}`);
+}
+
+function createShakeVisualEffect() {
+    // Create temporary visual effect element
+    const effect = document.createElement('div');
+    effect.className = 'shake-effect';
+    Object.assign(effect.style, {
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        width: '100%',
+        height: '100%',
+        background: 'radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)',
+        pointerEvents: 'none',
+        zIndex: '9999',
+        opacity: '0',
+        transition: 'opacity 0.5s ease-out'
+    });
+    
+    document.body.appendChild(effect);
+    
+    // Animate effect
+    setTimeout(() => {
+        effect.style.opacity = '1';
+    }, 10);
+    
+    setTimeout(() => {
+        effect.style.opacity = '0';
+        setTimeout(() => {
+            if (effect.parentNode) {
+                effect.parentNode.removeChild(effect);
+            }
+        }, 500);
+    }, 300);
+}
+
+// Initialize shake detection
+setTimeout(initShakeDetection, 1500);
+
+// Firework Animation System for Social Media Buttons
+function initFireworkEffects() {
+    const socialButtons = document.querySelectorAll('.social-link-pro');
+    
+    socialButtons.forEach(button => {
+        // Add hover event listeners
+        button.addEventListener('mouseenter', function() {
+            createButtonFirework(this);
+        });
+        
+        // Add click event listeners for dramatic explosion and reconstruction
+        button.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent default to show animation first
+            const originalHref = this.href;
+            createDramaticExplosionAndReconstruction(this, originalHref);
+        });
+        
+        // Add double-click for continuous explosion mode
+        let clickCount = 0;
+        let clickTimer;
+        
+        button.addEventListener('dblclick', function(e) {
+            e.preventDefault();
+            startContinuousButtonExplosions(this);
+        });
+    });
+    
+    console.log('✅ Enhanced firework effects initialized for social buttons');
+}
+
+function createButtonFirework(button) {
+    const container = button.querySelector('.firework-container');
+    if (!container) return;
+    
+    const rect = button.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    // Get color from data attribute
+    const color = button.dataset.fireworkColor || 'blue';
+    
+    // Adjust particle count and distances based on screen size
+    let particleCount = 8;
+    let baseDistance = 30;
+    let trailCount = 4;
+    
+    if (window.innerWidth <= 480) {
+        particleCount = 6;  // Fewer particles on mobile
+        baseDistance = 20;  // Shorter distances
+        trailCount = 3;
+    } else if (window.innerWidth <= 768) {
+        particleCount = 7;
+        baseDistance = 25;
+        trailCount = 3;
+    }
+    
+    // Create small firework effect
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = `firework-particle particle-${color}`;
+        
+        // Position at center
+        particle.style.left = `${centerX}px`;
+        particle.style.top = `${centerY}px`;
+        
+        container.appendChild(particle);
+        
+        // Animate particle
+        const angle = (i * (360 / particleCount)) * (Math.PI / 180);
+        const distance = baseDistance + Math.random() * 20;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        
+        particle.animate([
+            { 
+                transform: 'translate(0, 0) scale(0)',
+                opacity: 1
+            },
+            { 
+                transform: `translate(${tx}px, ${ty}px) scale(1)`,
+                opacity: 0
+            }
+        ], {
+            duration: 600,
+            easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+        });
+        
+        // Remove particle after animation
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        }, 600);
+    }
+    
+    // Create trails
+    for (let i = 0; i < trailCount; i++) {
+        const trail = document.createElement('div');
+        trail.className = 'firework-trail';
+        
+        const angle = (i * (360 / trailCount) + (360 / trailCount / 2)) * (Math.PI / 180);
+        const trailX = centerX + Math.cos(angle) * (baseDistance / 2);
+        const trailY = centerY + Math.sin(angle) * (baseDistance / 2);
+        
+        trail.style.left = `${trailX}px`;
+        trail.style.top = `${trailY}px`;
+        trail.style.transform = `rotate(${angle}rad)`;
+        
+        container.appendChild(trail);
+        
+        trail.animate([
+            { 
+                transform: `translate(0, 0) rotate(${angle}rad) scaleY(1)`,
+                opacity: 0.7
+            },
+            { 
+                transform: `translate(0, -${baseDistance * 1.5}px) rotate(${angle}rad) scaleY(0.3)`,
+                opacity: 0
+            }
+        ], {
+            duration: 800,
+            easing: 'ease-out'
+        });
+        
+        setTimeout(() => {
+            if (trail.parentNode) {
+                trail.parentNode.removeChild(trail);
+            }
+        }, 800);
+    }
+}
+
+function createExplosionFirework(button) {
+    const container = button.querySelector('.firework-container');
+    if (!container) return;
+    
+    const rect = button.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const color = button.dataset.fireworkColor || 'blue';
+    
+    // Adjust explosion parameters based on screen size
+    let particleCount = 15;
+    let baseDistance = 40;
+    let ringCount = 3;
+    
+    if (window.innerWidth <= 480) {
+        particleCount = 10;  // Fewer particles on mobile
+        baseDistance = 30;   // Shorter distances
+        ringCount = 2;
+    } else if (window.innerWidth <= 768) {
+        particleCount = 12;
+        baseDistance = 35;
+        ringCount = 2;
+    }
+    
+    // Create explosion effect with more particles
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = `firework-particle particle-${color}`;
+        
+        particle.style.left = `${centerX}px`;
+        particle.style.top = `${centerY}px`;
+        
+        container.appendChild(particle);
+        
+        // Random direction explosion
+        const angle = (Math.random() * 360) * (Math.PI / 180);
+        const distance = baseDistance + Math.random() * (baseDistance * 0.8);
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        
+        const duration = 800 + Math.random() * 400;
+        
+        particle.animate([
+            { 
+                transform: 'translate(0, 0) scale(0)',
+                opacity: 1
+            },
+            { 
+                transform: `translate(${tx}px, ${ty}px) scale(1)`,
+                opacity: 0
+            }
+        ], {
+            duration: duration,
+            easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+        });
+        
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        }, duration);
+    }
+    
+    // Create multiple rings of trails
+    for (let ring = 0; ring < ringCount; ring++) {
+        const trailCount = 6 + ring * 2;  // 6, 8, 10 trails per ring
+        const ringRadius = (baseDistance / 2) + ring * 10;
+        
+        for (let i = 0; i < trailCount; i++) {
+            const trail = document.createElement('div');
+            trail.className = 'firework-trail';
+            
+            const angle = (i * (360 / trailCount) + (ring * 15)) * (Math.PI / 180);
+            const trailX = centerX + Math.cos(angle) * ringRadius;
+            const trailY = centerY + Math.sin(angle) * ringRadius;
+            
+            trail.style.left = `${trailX}px`;
+            trail.style.top = `${trailY}px`;
+            trail.style.transform = `rotate(${angle}rad)`;
+            
+            container.appendChild(trail);
+            
+            const duration = 1000 + ring * 200;
+            
+            trail.animate([
+                { 
+                    transform: `translate(0, 0) rotate(${angle}rad) scaleY(1)`,
+                    opacity: 0.7 - (ring * 0.2)
+                },
+                { 
+                    transform: `translate(0, -${baseDistance}px) rotate(${angle}rad) scaleY(0.2)`,
+                    opacity: 0
+                }
+            ], {
+                duration: duration,
+                easing: 'ease-out'
+            });
+            
+            setTimeout(() => {
+                if (trail.parentNode) {
+                    trail.parentNode.removeChild(trail);
+                }
+            }, duration);
+        }
+    }
+    
+    // Add haptic feedback
+    if (navigator.vibrate) {
+        navigator.vibrate([30, 20, 30]);
+    }
+}
+
+function createDramaticExplosionAndReconstruction(button, href) {
+    const container = button.querySelector('.firework-container');
+    if (!container) return;
+    
+    const rect = button.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const color = button.dataset.fireworkColor || 'blue';
+    
+    // Add dramatic glow effect
+    const glow = document.createElement('div');
+    glow.className = 'dramatic-glow';
+    button.appendChild(glow);
+    
+    // Start explosion animation
+    button.classList.add('button-explode');
+    
+    // Create initial explosion particles
+    setTimeout(() => {
+        createExplosionParticles(container, centerX, centerY, color, 25);
+    }, 100);
+    
+    // Create trails during explosion
+    setTimeout(() => {
+        createExplosionTrails(container, centerX, centerY, 3);
+    }, 200);
+    
+    // Add haptic feedback
+    if (navigator.vibrate) {
+        navigator.vibrate([50, 30, 50, 30, 50]);
+    }
+    
+    // Start reconstruction after explosion completes
+    setTimeout(() => {
+        reconstructButton(button, container, centerX, centerY, color, href);
+    }, 800);
+    
+    // Remove glow effect
+    setTimeout(() => {
+        if (glow.parentNode) {
+            glow.parentNode.removeChild(glow);
+        }
+    }, 1500);
+}
+
+function createExplosionParticles(container, centerX, centerY, color, count) {
+    // Adjust for screen size
+    let particleCount = count;
+    let baseDistance = 60;
+    
+    if (window.innerWidth <= 480) {
+        particleCount = Math.floor(count * 0.6);
+        baseDistance = 40;
+    } else if (window.innerWidth <= 768) {
+        particleCount = Math.floor(count * 0.8);
+        baseDistance = 50;
+    }
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = `firework-particle particle-${color}`;
+        
+        particle.style.left = `${centerX}px`;
+        particle.style.top = `${centerY}px`;
+        
+        container.appendChild(particle);
+        
+        // Random direction explosion
+        const angle = (Math.random() * 360) * (Math.PI / 180);
+        const distance = baseDistance + Math.random() * 40;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        
+        const duration = 1000 + Math.random() * 500;
+        
+        particle.animate([
+            { 
+                transform: 'translate(0, 0) scale(0)',
+                opacity: 1
+            },
+            { 
+                transform: `translate(${tx}px, ${ty}px) scale(1)`,
+                opacity: 0
+            }
+        ], {
+            duration: duration,
+            easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+        });
+        
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        }, duration);
+    }
+}
+
+function createExplosionTrails(container, centerX, centerY, ringCount) {
+    for (let ring = 0; ring < ringCount; ring++) {
+        const trailCount = 12 + ring * 4;
+        const ringRadius = 30 + ring * 20;
+        
+        for (let i = 0; i < trailCount; i++) {
+            const trail = document.createElement('div');
+            trail.className = 'firework-trail';
+            
+            const angle = (i * (360 / trailCount) + (ring * 15)) * (Math.PI / 180);
+            const trailX = centerX + Math.cos(angle) * ringRadius;
+            const trailY = centerY + Math.sin(angle) * ringRadius;
+            
+            trail.style.left = `${trailX}px`;
+            trail.style.top = `${trailY}px`;
+            trail.style.transform = `rotate(${angle}rad)`;
+            
+            container.appendChild(trail);
+            
+            const duration = 1200 + ring * 300;
+            
+            trail.animate([
+                { 
+                    transform: `translate(0, 0) rotate(${angle}rad) scaleY(1)`,
+                    opacity: 0.8 - (ring * 0.2)
+                },
+                { 
+                    transform: `translate(0, -80px) rotate(${angle}rad) scaleY(0.2)`,
+                    opacity: 0
+                }
+            ], {
+                duration: duration,
+                easing: 'ease-out'
+            });
+            
+            setTimeout(() => {
+                if (trail.parentNode) {
+                    trail.parentNode.removeChild(trail);
+                }
+            }, duration);
+        }
+    }
+}
+
+function reconstructButton(button, container, centerX, centerY, color, href) {
+    // Remove explosion class and add reconstruction class
+    button.classList.remove('button-explode');
+    button.classList.add('button-reconstruct');
+    
+    // Create formation particles that converge to rebuild the button
+    setTimeout(() => {
+        createFormationParticles(container, centerX, centerY, color, () => {
+            // Navigate after reconstruction completes
+            setTimeout(() => {
+                if (href.startsWith('mailto:')) {
+                    window.location.href = href;
+                } else {
+                    window.open(href, '_blank');
+                }
+            }, 300);
+        });
+    }, 100);
+    
+    // Create reconstruction trails
+    createReconstructionTrails(container, centerX, centerY);
+    
+    // Remove reconstruction class after animation completes
+    setTimeout(() => {
+        button.classList.remove('button-reconstruct');
+    }, 1200);
+}
+
+function createFormationParticles(container, centerX, centerY, color, onComplete) {
+    const particleCount = 20;
+    let completedAnimations = 0;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = `formation-particle particle-${color}`;
+        
+        // Start from random positions around the button
+        const startAngle = (Math.random() * 360) * (Math.PI / 180);
+        const startDistance = 80 + Math.random() * 40;
+        const startX = centerX + Math.cos(startAngle) * startDistance;
+        const startY = centerY + Math.sin(startAngle) * startDistance;
+        
+        particle.style.left = `${startX}px`;
+        particle.style.top = `${startY}px`;
+        
+        container.appendChild(particle);
+        
+        // Animate toward center
+        const duration = 800 + Math.random() * 400;
+        
+        particle.animate([
+            { 
+                transform: `translate(0, 0) scale(1)`,
+                opacity: 1
+            },
+            { 
+                transform: `translate(${centerX - startX}px, ${centerY - startY}px) scale(0)`,
+                opacity: 0
+            }
+        ], {
+            duration: duration,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        });
+        
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+            completedAnimations++;
+            if (completedAnimations === particleCount) {
+                onComplete();
+            }
+        }, duration);
+    }
+}
+
+function createReconstructionTrails(container, centerX, centerY) {
+    const trailCount = 16;
+    
+    for (let i = 0; i < trailCount; i++) {
+        const trail = document.createElement('div');
+        trail.className = 'reconstruction-trail';
+        
+        // Start from circle around the center
+        const angle = (i * (360 / trailCount)) * (Math.PI / 180);
+        const startRadius = 60;
+        const startX = centerX + Math.cos(angle) * startRadius;
+        const startY = centerY + Math.sin(angle) * startRadius;
+        
+        trail.style.left = `${startX}px`;
+        trail.style.top = `${startY}px`;
+        trail.style.transform = `rotate(${angle + Math.PI}rad)`; // Point toward center
+        
+        container.appendChild(trail);
+        
+        trail.animate([
+            { 
+                transform: `translate(0, 0) rotate(${angle + Math.PI}rad) scaleY(1)`,
+                opacity: 0.7
+            },
+            { 
+                transform: `translate(${centerX - startX}px, ${centerY - startY}px) rotate(${angle + Math.PI}rad) scaleY(0.1)`,
+                opacity: 0
+            }
+        ], {
+            duration: 1000,
+            easing: 'ease-in'
+        });
+        
+        setTimeout(() => {
+            if (trail.parentNode) {
+                trail.parentNode.removeChild(trail);
+            }
+        }, 1000);
+    }
+}
+
+// Initialize firework effects
+setTimeout(initFireworkEffects, 2000);
+
+// Scroll-Triggered Flying Entrance and Explosion Effects
+function initScrollTriggeredEffects() {
+    const socialSection = document.getElementById('socialSection');
+    if (!socialSection) return;
+    
+    let hasAnimated = false;
+    
+    function checkScrollPosition() {
+        if (hasAnimated) return;
+        
+        const sectionRect = socialSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // Trigger when section is 30% visible
+        if (sectionRect.top < windowHeight * 0.7 && sectionRect.bottom > 0) {
+            triggerFlyingEntrance();
+            hasAnimated = true;
+        }
+    }
+    
+    function triggerFlyingEntrance() {
+        const buttons = socialSection.querySelectorAll('.social-link-pro');
+        
+        // Add flying entrance animations
+        buttons.forEach((button, index) => {
+            setTimeout(() => {
+                button.classList.add('animate');
+            }, index * 100); // Staggered entrance
+        });
+        
+        // Trigger explosion effect after all buttons have flown in
+        setTimeout(() => {
+            triggerScrollExplosion();
+        }, 1500);
+        
+        console.log('🚀 Scroll-triggered flying entrance activated');
+    }
+    
+    function triggerScrollExplosion() {
+        const buttons = socialSection.querySelectorAll('.social-link-pro');
+        
+        // Start continuous explosion cycle
+        startContinuousExplosions(buttons);
+        
+        console.log('🎆 Continuous scroll-triggered explosions activated');
+    }
+    
+    function startContinuousExplosions(buttons) {
+        let currentIndex = 0;
+        const explosionInterval = 800; // Time between each explosion
+        const cycleDuration = 4000;   // Time for complete cycle through all buttons
+        
+        function triggerNextExplosion() {
+            const button = buttons[currentIndex];
+            if (!button) return;
+            
+            // Add explosion class
+            button.classList.add('scroll-explosion');
+            
+            // Create explosion effects
+            const container = button.querySelector('.scroll-firework-container');
+            const rect = button.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const color = button.dataset.fireworkColor || 'blue';
+            
+            createScrollExplosionParticles(container, centerX, centerY, color);
+            createScrollExplosionTrails(container, centerX, centerY);
+            
+            // Add haptic feedback
+            if (navigator.vibrate) {
+                navigator.vibrate([50, 25, 50]);
+            }
+            
+            // Remove explosion class after animation
+            setTimeout(() => {
+                button.classList.remove('scroll-explosion');
+            }, 2000);
+            
+            // Move to next button
+            currentIndex = (currentIndex + 1) % buttons.length;
+        }
+        
+        // Start the continuous cycle
+        triggerNextExplosion(); // First explosion immediately
+        
+        const explosionTimer = setInterval(triggerNextExplosion, explosionInterval);
+        
+        // Continue for 20 seconds then slow down
+        setTimeout(() => {
+            clearInterval(explosionTimer);
+            // Slower continuous cycle
+            const slowTimer = setInterval(() => {
+                triggerNextExplosion();
+            }, 1500);
+            
+            // Stop after 1 minute total
+            setTimeout(() => {
+                clearInterval(slowTimer);
+                console.log('🎉 Continuous explosions completed');
+            }, 60000);
+        }, 20000);
+    }
+    
+    // Add throttled scroll event listener
+    window.addEventListener('scroll', checkScrollPosition, { passive: true });
+    
+    // Check on load in case already scrolled
+    setTimeout(checkScrollPosition, 1000);
+    
+    console.log('✅ Scroll-triggered effects initialized');
+}
+
+function createScrollExplosionParticles(container, centerX, centerY, color) {
+    const particleCount = 30;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = `firework-particle particle-${color}`;
+        
+        particle.style.left = `${centerX}px`;
+        particle.style.top = `${centerY}px`;
+        
+        container.appendChild(particle);
+        
+        // Random explosion direction
+        const angle = (Math.random() * 360) * (Math.PI / 180);
+        const distance = 70 + Math.random() * 50;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        
+        const duration = 1500 + Math.random() * 500;
+        
+        particle.animate([
+            { 
+                transform: 'translate(0, 0) scale(0)',
+                opacity: 1
+            },
+            { 
+                transform: `translate(${tx}px, ${ty}px) scale(1)`,
+                opacity: 0
+            }
+        ], {
+            duration: duration,
+            easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+        });
+        
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        }, duration);
+    }
+}
+
+function createScrollExplosionTrails(container, centerX, centerY) {
+    const trailCount = 20;
+    
+    for (let i = 0; i < trailCount; i++) {
+        const trail = document.createElement('div');
+        trail.className = 'firework-trail';
+        
+        const angle = (i * (360 / trailCount)) * (Math.PI / 180);
+        const trailX = centerX + Math.cos(angle) * 40;
+        const trailY = centerY + Math.sin(angle) * 40;
+        
+        trail.style.left = `${trailX}px`;
+        trail.style.top = `${trailY}px`;
+        trail.style.transform = `rotate(${angle}rad)`;
+        
+        container.appendChild(trail);
+        
+        trail.animate([
+            { 
+                transform: `translate(0, 0) rotate(${angle}rad) scaleY(1)`,
+                opacity: 0.9
+            },
+            { 
+                transform: `translate(0, -100px) rotate(${angle}rad) scaleY(0.1)`,
+                opacity: 0
+            }
+        ], {
+            duration: 1800,
+            easing: 'ease-out'
+        });
+        
+        setTimeout(() => {
+            if (trail.parentNode) {
+                trail.parentNode.removeChild(trail);
+            }
+        }, 1800);
+    }
+}
+
+// Initialize scroll-triggered effects
+setTimeout(initScrollTriggeredEffects, 2500);
+
+// Continuous Ambient Firework Effects
+function initAmbientFireworks() {
+    const body = document.body;
+    
+    // Create ambient firework container
+    const ambientContainer = document.createElement('div');
+    ambientContainer.id = 'ambient-fireworks';
+    Object.assign(ambientContainer.style, {
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none',
+        zIndex: '50',
+        overflow: 'hidden'
+    });
+    
+    body.appendChild(ambientContainer);
+    
+    // Start optimized ambient fireworks with reduced frequency
+    setInterval(() => {
+        createAmbientFirework(ambientContainer);
+    }, 5000); // Every 5 seconds to reduce CPU usage
+    
+    console.log('✨ Ambient firework effects initialized');
+}
+
+function createAmbientFirework(container) {
+    // Random position on screen
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight * 0.7; // Keep in upper 70% of screen
+    
+    // Enhanced color palette with more vivid options
+    const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'cyan'];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    
+    // Create explosion center
+    const center = document.createElement('div');
+    Object.assign(center.style, {
+        position: 'absolute',
+        left: `${x}px`,
+        top: `${y}px`,
+        width: '4px',
+        height: '4px',
+        backgroundColor: 'white',
+        borderRadius: '50%',
+        boxShadow: '0 0 10px 2px white',
+        opacity: '0'
+    });
+    
+    container.appendChild(center);
+    
+    // Fade in center
+    setTimeout(() => {
+        center.style.opacity = '1';
+        center.style.transition = 'opacity 0.2s';
+    }, 10);
+    
+    // Create particles with enhanced intensity
+    const particleCount = 35;
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = `firework-particle particle-${color}`;
+        
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        
+        container.appendChild(particle);
+        
+        // Random direction
+        const angle = (Math.random() * 360) * (Math.PI / 180);
+        const distance = 50 + Math.random() * 70;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        
+        const duration = 1200 + Math.random() * 800;
+        
+        particle.animate([
+            { 
+                transform: 'translate(0, 0) scale(0)',
+                opacity: 1
+            },
+            { 
+                transform: `translate(${tx}px, ${ty}px) scale(1)`,
+                opacity: 0
+            }
+        ], {
+            duration: duration,
+            easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+        });
+        
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        }, duration);
+    }
+    
+    // Create trails with enhanced visibility
+    const trailCount = 20;
+    for (let i = 0; i < trailCount; i++) {
+        const trail = document.createElement('div');
+        trail.className = 'firework-trail';
+        
+        const angle = (i * (360 / trailCount)) * (Math.PI / 180);
+        const trailX = x + Math.cos(angle) * 30;
+        const trailY = y + Math.sin(angle) * 30;
+        
+        trail.style.left = `${trailX}px`;
+        trail.style.top = `${trailY}px`;
+        trail.style.transform = `rotate(${angle}rad)`;
+        
+        container.appendChild(trail);
+        
+        trail.animate([
+            { 
+                transform: `translate(0, 0) rotate(${angle}rad) scaleY(1)`,
+                opacity: 0.7
+            },
+            { 
+                transform: `translate(0, -70px) rotate(${angle}rad) scaleY(0.2)`,
+                opacity: 0
+            }
+        ], {
+            duration: 1500,
+            easing: 'ease-out'
+        });
+        
+        setTimeout(() => {
+            if (trail.parentNode) {
+                trail.parentNode.removeChild(trail);
+            }
+        }, 1500);
+    }
+    
+    // Remove center after explosion
+    setTimeout(() => {
+        if (center.parentNode) {
+            center.parentNode.removeChild(center);
+        }
+    }, 1000);
+}
+
+function startContinuousButtonExplosions(button) {
+    const container = button.querySelector('.firework-container');
+    if (!container) return;
+    
+    const rect = button.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const color = button.dataset.fireworkColor || 'blue';
+    
+    // Add continuous explosion class
+    button.classList.add('continuous-explosion');
+    
+    let explosionCount = 0;
+    const maxExplosions = 15; // Limit to prevent performance issues
+    
+    function createSingleExplosion() {
+        if (explosionCount >= maxExplosions) {
+            stopContinuousExplosions(button);
+            return;
+        }
+        
+        // Create explosion particles
+        for (let i = 0; i < 15; i++) {
+            const particle = document.createElement('div');
+            particle.className = `firework-particle particle-${color}`;
+            
+            particle.style.left = `${centerX}px`;
+            particle.style.top = `${centerY}px`;
+            
+            container.appendChild(particle);
+            
+            // Random direction but closer to button
+            const angle = (Math.random() * 360) * (Math.PI / 180);
+            const distance = 30 + Math.random() * 30;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+            
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            
+            const duration = 600 + Math.random() * 400;
+            
+            particle.animate([
+                { 
+                    transform: 'translate(0, 0) scale(0)',
+                    opacity: 1
+                },
+                { 
+                    transform: `translate(${tx}px, ${ty}px) scale(1)`,
+                    opacity: 0
+                }
+            ], {
+                duration: duration,
+                easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+            });
+            
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+            }, duration);
+        }
+        
+        // Create small trails
+        for (let i = 0; i < 8; i++) {
+            const trail = document.createElement('div');
+            trail.className = 'firework-trail';
+            
+            const angle = (i * 45) * (Math.PI / 180);
+            const trailX = centerX + Math.cos(angle) * 20;
+            const trailY = centerY + Math.sin(angle) * 20;
+            
+            trail.style.left = `${trailX}px`;
+            trail.style.top = `${trailY}px`;
+            trail.style.transform = `rotate(${angle}rad)`;
+            
+            container.appendChild(trail);
+            
+            trail.animate([
+                { 
+                    transform: `translate(0, 0) rotate(${angle}rad) scaleY(1)`,
+                    opacity: 0.6
+                },
+                { 
+                    transform: `translate(0, -40px) rotate(${angle}rad) scaleY(0.2)`,
+                    opacity: 0
+                }
+            ], {
+                duration: 800,
+                easing: 'ease-out'
+            });
+            
+            setTimeout(() => {
+                if (trail.parentNode) {
+                    trail.parentNode.removeChild(trail);
+                }
+            }, 800);
+        }
+        
+        // Add haptic feedback
+        if (navigator.vibrate) {
+            navigator.vibrate([30, 15, 30]);
+        }
+        
+        explosionCount++;
+    }
+    
+    // Start immediate explosion
+    createSingleExplosion();
+    
+    // Continue with rapid explosions
+    const explosionInterval = setInterval(createSingleExplosion, 400);
+    
+    // Store interval ID on button for cleanup
+    button.continuousExplosionInterval = explosionInterval;
+    
+    console.log(`🔥 Continuous explosions started on ${button.querySelector('span').textContent}`);
+}
+
+function stopContinuousExplosions(button) {
+    if (button.continuousExplosionInterval) {
+        clearInterval(button.continuousExplosionInterval);
+        button.classList.remove('continuous-explosion');
+        delete button.continuousExplosionInterval;
+        console.log(`⏹️ Continuous explosions stopped on ${button.querySelector('span').textContent}`);
+    }
+}
+
+// Initialize ambient fireworks
+setTimeout(initAmbientFireworks, 3000);
+
+
+
+
+
 // Ensure profile image is visible immediately
 window.addEventListener('load', function() {
     const profileImg = document.getElementById('profile-img');
@@ -964,3 +2146,21 @@ window.addEventListener('load', function() {
 // Also initialize mobile menu on DOM load
 setTimeout(initMobileMenu, 500);
 setTimeout(initLightbox, 500);
+
+// Mascot and Welcome Bubble functionality
+document.addEventListener('DOMContentLoaded', function() {
+  // Show welcome message as speech bubble
+  const welcomeMessage = document.getElementById('welcomeMessage');
+  if (welcomeMessage) {
+    // Make welcome message visible as speech bubble
+    welcomeMessage.style.display = 'block';
+    welcomeMessage.classList.add('show');
+    
+    // Start the message transition animation after 5 seconds
+    setTimeout(startMessageTransition, 5000);
+  }
+  
+});
+
+
+

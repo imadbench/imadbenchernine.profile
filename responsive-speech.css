@@ -1,0 +1,295 @@
+/* Virtual Character Speech Bubble Styles */
+
+.virtual-character-container {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  font-family: Arial, sans-serif;
+  overflow: visible;
+  contain: layout;
+}
+
+.virtual-character {
+  position: relative;
+  width: clamp(50px, 8vw, 70px);
+  height: clamp(65px, 10vw, 90px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 10001;
+}
+
+.virtual-character:hover {
+  transform: scale(1.1) translateX(10px);
+  opacity: 0.8;
+}
+
+.character-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%; /* Fully round for cute cartoon look */
+  background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 28px;
+  box-shadow: 0 6px 25px rgba(161, 196, 253, 0.6);
+  border: 4px solid white;
+  animation: float 4s ease-in-out infinite;
+  position: relative;
+}
+
+/* Cute face details for the cartoon friend */
+.character-avatar::before {
+  content: '';
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 12px;
+  height: 12px;
+  background: #333;
+  border-radius: 50%;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.character-avatar::after {
+  content: '';
+  position: absolute;
+  top: 25%;
+  right: 25%;
+  width: 12px;
+  height: 12px;
+  background: #333;
+  border-radius: 50%;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.virtual-character:hover .character-avatar::before,
+.virtual-character:hover .character-avatar::after {
+  opacity: 1;
+}
+
+.virtual-character:hover .smile {
+  opacity: 1;
+}
+
+/* Add a smile */
+.character-avatar .smile {
+  position: absolute;
+  bottom: 25%;
+  width: 20px;
+  height: 10px;
+  border-bottom: 3px solid #333;
+  border-radius: 0 0 50% 50%;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+/* Facial features for the character */
+.eye {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #333;
+  border-radius: 50%;
+  top: 25%;
+}
+
+.left-eye {
+  left: 25%;
+}
+
+.right-eye {
+  right: 25%;
+}
+
+.blush {
+  position: absolute;
+  width: 12px;
+  height: 6px;
+  background: rgba(255, 182, 193, 0.6);
+  border-radius: 50%;
+  top: 45%;
+  opacity: 0.7;
+}
+
+.left-blush {
+  left: 15%;
+}
+
+.right-blush {
+  right: 15%;
+}
+
+/* Add animation to facial features */
+.virtual-character:hover .eye {
+  transform: scale(1.2);
+  transition: transform 0.2s ease;
+}
+
+.virtual-character:hover .blush {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+@keyframes peeking {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.speech-bubble {
+  position: absolute;
+  background: #ffffff; /* Pure white background */
+  border: 1px solid #cccccc;
+  border-radius: 50% 50% 50% 50%; /* Circular/Oval cloud shape */
+  padding: clamp(15px, 3vw, 30px) clamp(20px, 4vw, 40px);
+  max-width: clamp(200px, 30vw, 300px); /* Responsive width */
+  min-width: clamp(150px, 20vw, 200px); /* Responsive minimum width */
+  height: clamp(80px, 12vh, 120px); /* Responsive height */
+  display: block;
+  text-align: center; /* Center text horizontally */
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+  box-shadow: 
+    0 8px 25px rgba(173, 216, 230, 0.3),
+    0 4px 15px rgba(135, 206, 250, 0.2),
+    inset 0 2px 5px rgba(255, 255, 255, 0.8);
+  font-size: clamp(22px, 3vw, 30px); /* Even larger font size for better visibility */
+  color: #000000; /* Black text for better contrast */
+  font-weight: 500; /* Slightly bolder for better readability */
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+  z-index: 999999; /* Very high z-index to ensure it's on top */
+  top: -100px; /* Match third character vertical positioning */
+  right: 100%; /* Match third character horizontal positioning */
+  transform-origin: bottom;
+  transform: scale(0.8);
+}
+
+.speech-bubble:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  right: -10px; /* Position the arrow to connect with the character */
+  transform: none;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid white;
+}
+
+.speech-bubble.show {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+  0% { transform: translateX(-50%) scale(0.5); opacity: 0; }
+  70% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+  100% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+/* Side edge positions - only right side since we only show right-side characters */
+.position-mr { top: 20%; right: max(2vw, 20px); transform: translateX(50%) rotateY(-20deg); }
+
+/* Additional side positions at different heights */
+.position-mr2 { top: 40%; right: max(2vw, 20px); transform: translateX(50%) rotateY(-20deg); }
+
+/* Bottom position for friend Imad */
+.position-bottom { bottom: max(15vh, 80px); right: max(2vw, 20px); top: auto; transform: translateX(50%) rotateY(-20deg); }
+
+/* Ensure the speech bubble is visible for bottom position */
+.position-bottom .speech-bubble {
+  top: -100px;
+  right: 100%;
+  transform: translateX(0) scale(0.8);
+}
+
+.position-bottom .speech-bubble:after {
+  bottom: -10px;
+  right: -10px;
+  border-top: 10px solid white;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+/* Override speech bubble positioning for first and second characters to match third */
+.position-mr .speech-bubble,
+.position-mr2 .speech-bubble {
+  top: -100px;
+  right: 100%;
+  transform: translateX(0) scale(0.8);
+}
+
+/* Arabic text alignment for the last character */
+.position-bottom .speech-bubble {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .virtual-character {
+    width: clamp(45px, 7vw, 60px);
+    height: clamp(55px, 8vw, 60px);
+  }
+  
+  .character-avatar {
+    font-size: 24px;
+  }
+  
+  .speech-bubble {
+    max-width: 150px; /* Reduced width to prevent overlapping */
+    font-size: 11px;
+    top: -80px; /* Increased space above */
+    right: 100%; /* Position to the left of the character */
+    transform: translateX(0); /* Position properly to the left */
+  }
+  
+  .speech-bubble:after {
+    right: -8px; /* Position the arrow near the character */
+    left: auto; /* Reset the default positioning */
+    transform: none;
+  }
+  
+  .position-ml, .position-ml2, .position-ml3 { left: max(1.5vw, 15px); }
+  .position-mr, .position-mr2, .position-mr3 { right: max(1.5vw, 15px); }
+}
+
+@media (max-width: 480px) {
+  .virtual-character {
+    width: clamp(40px, 6vw, 50px);
+    height: clamp(45px, 7vw, 50px);
+  }
+  
+  .character-avatar {
+    font-size: 18px;
+  }
+  
+  .speech-bubble {
+    max-width: 130px; /* Even smaller width for small screens */
+    font-size: 10px;
+    top: -70px;
+    transform: translateX(0);
+  }
+  
+  .speech-bubble:after {
+    right: -6px;
+  }
+  
+  .position-mr, .position-mr2 { right: max(1vw, 10px); }
+}

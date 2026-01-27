@@ -233,41 +233,8 @@ class MouseMoveEffects {
     }
 
     createCursorFollower() {
-        // Create custom cursor follower
-        const follower = document.createElement('div');
-        follower.className = 'cursor-follower';
-        Object.assign(follower.style, {
-            position: 'fixed',
-            width: '20px',
-            height: '20px',
-            borderRadius: '50%',
-            backgroundColor: 'rgba(37, 99, 235, 0.5)',
-            pointerEvents: 'none',
-            zIndex: '9999',
-            transition: 'all 0.1s ease',
-            mixBlendMode: 'difference'
-        });
-        
-        document.body.appendChild(follower);
-        
-        document.addEventListener('mousemove', (e) => {
-            follower.style.left = e.clientX - 10 + 'px';
-            follower.style.top = e.clientY - 10 + 'px';
-        });
-        
-        // Hide default cursor on interactive elements
-        const interactiveElements = document.querySelectorAll('a, button, .project-card, .skill-card');
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                follower.style.transform = 'scale(2)';
-                follower.style.backgroundColor = 'rgba(37, 99, 235, 0.8)';
-            });
-            
-            el.addEventListener('mouseleave', () => {
-                follower.style.transform = 'scale(1)';
-                follower.style.backgroundColor = 'rgba(37, 99, 235, 0.5)';
-            });
-        });
+        // Cursor follower removed as requested
+        return;
     }
 }
 
